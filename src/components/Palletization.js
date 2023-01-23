@@ -18,7 +18,7 @@ function Palletization() {
     <>
       <section className="heading">
         <h1>
-          <FaPallet /> PICKING
+          <FaPallet /> PALLETIZATION
         </h1>
       </section>
 
