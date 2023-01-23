@@ -1,7 +1,7 @@
 {
   "name": "webpalletizer",
   "version": "0.1.0",
-  "homepage": "https://techmayur18.github.com/WebHHT/",
+  "homepage": "https://techmayur18.github.io/WebHHT/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",
