@@ -1,0 +1,10 @@
+ 
+ after version -
+ // "homepage": "https://techmayur18.github.io/WebHHT/",
+
+
+
+before script -
+     "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    {cmd > npm run deploy}

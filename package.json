@@ -1,13 +1,10 @@
 {
   "name": "webpalletizer",
   "version": "0.1.0",
-  "homepage": "https://techmayur18.github.io/WebHHT/",
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
-    "@mui/material": "^5.11.5",
-    "quagga": "^0.12.1",
+    "axios": "^1.2.3",
+    "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
@@ -16,9 +13,7 @@
     "react-toastify": "^9.1.1"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "start": "set PORT=3000 && react-scripts start",
+    "start": " react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -42,6 +37,7 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^5.0.0"
+    "gh-pages": "^5.0.0",
+    "quagga": "^0.12.1"
   }
 }

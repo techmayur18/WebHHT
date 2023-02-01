@@ -1,17 +1,72 @@
-import { useState } from "react";
-import { FaPallet } from "react-icons/fa";
-import ScanBarcode from "./ScanBarcode";
+import { useState } from 'react';
+import { FaPallet } from 'react-icons/fa';
+import ScanBarcode from './ScanBarcode';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { config } from '../config';
 
-function Palletization() {
-  const [palletBarcode, setPalletBarcode] = useState("");
+const Palletization = props => {
+  const [palletBarcode, setPalletBarcode] = useState('');
   const [articleBarcode, setArticleBarcode] = useState([]);
 
-  const oncChange = (e) => {
-    console.log("Hello World");
+
+  const onPChange = async e => {
+    setPalletBarcode(e.target.value);
+
+    // try {
+    //   axios.defaults.headers['Bearer'] = token;
+    //   const { data: Resp } = await axios({
+    //     url: `${config.API_URL}pallet/validate`
+    //   });
+    //   console.log('first in function--->', palletBarcode);
+
+    //   if (palletBarcode === Resp.data) console.log('Successfully Validate', palletBarcode);
+    // } catch (err) {
+    //   console.log('EXECUTION_ERR:-->', err);
+    //   if (err.response && err.response.data) {
+    //     const errMsg = err.response.data.message || 'Wrong Pallet ID';
+    //     // console.log('Error data validation---->', err.response.data);
+    //     console.log('Error Msg-->', errMsg);
+    //     // toast.error(errMsg, {
+    //     //   autoClose: false
+    //     // });
+    //     return false;
+    //   }
+    // }
   };
 
-  const onSubmit = async (e) => {
+  const onAChange = e => {
+    setArticleBarcode(e.target.value);
+  };
+
+  const token = localStorage.getItem('accessToken');
+
+  const onSubmit = async e => {
     e.preventDefault();
+
+    try {
+      const { data: Resp } = await axios({
+        method: 'POST',
+        url: `${config.API_URL}pallet/register/${palletBarcode}?withPkg=true`,
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        data: {
+          sku: 'EL1000',
+          qty: articleBarcode.split(',').length,
+          pkgs: [articleBarcode]
+        }
+      });
+      // console.log('resp data fjjr-->', Resp.data);
+      toast.success("Successfully Pallatize!!",Resp.message);
+      window.location.reload();
+    } catch (err) {
+      if (err.response && err.response.data) {
+        const errMsg = err.response.data || 'Retrieval Failed.';
+        console.log(err.response.data);
+        toast.info(errMsg.error);
+        toast.error(errMsg.desc[1]);
+        return false;
+      }
+    }
   };
 
   return (
@@ -23,12 +78,8 @@ function Palletization() {
       </section>
 
       <section className="form">
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} >
           <div className="form-group">
-            {/* <button className="btn btn-sm" id="scan_pallet">
-              Scan Pallet
-            </button> */}
-
             <div>{<ScanBarcode setBarcode={setPalletBarcode} />}</div>
             <input
               type="text"
@@ -37,24 +88,21 @@ function Palletization() {
               name="pallet"
               value={palletBarcode}
               placeholder="Pallet Barcode"
-              onChange={oncChange}
-              disabled
+              onChange={onPChange}
+              // disabled
             />
           </div>
           <div className="form-group">
-            {/* <button className="btn btn-sm" id="scan_pallet">
-              Scan Article
-            </button> */}
             <div>{<ScanBarcode setArticleBarcode={setArticleBarcode} />}</div>
             <input
               type="text"
               className="form-control"
               id="article"
               name="article"
-              value={articleBarcode.join(",")}
+              value={articleBarcode}
               placeholder="Article Barcode"
-              onChange={oncChange}
-              disabled
+              onChange={onAChange}
+              // disabled
             />
           </div>
           <div className="form-group">
@@ -64,6 +112,6 @@ function Palletization() {
       </section>
     </>
   );
-}
+};
 
 export default Palletization;
