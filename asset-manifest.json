@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/WebHHT/static/css/main.c6c995b3.css",
-    "main.js": "/WebHHT/static/js/main.7643f68d.js",
+    "main.js": "/WebHHT/static/js/main.e179d292.js",
     "service-worker.js": "/WebHHT/service-worker.js",
     "index.html": "/WebHHT/index.html",
     "main.c6c995b3.css.map": "/WebHHT/static/css/main.c6c995b3.css.map",
-    "main.7643f68d.js.map": "/WebHHT/static/js/main.7643f68d.js.map"
+    "main.e179d292.js.map": "/WebHHT/static/js/main.e179d292.js.map"
   },
   "entrypoints": [
     "static/css/main.c6c995b3.css",
-    "static/js/main.7643f68d.js"
+    "static/js/main.e179d292.js"
   ]
 }
