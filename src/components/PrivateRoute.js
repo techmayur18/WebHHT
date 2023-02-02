@@ -1,16 +1,20 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
-import { toast } from 'react-toastify';
 
 const PrivateRoute = () => {
   try {
-    const token = localStorage.getItem('accessToken');
-    jwt_decode(token, { header: true });
-
-    return token ? <Outlet /> : <Navigate to="/" />;
+    const userToken = window.localStorage.getItem('accessToken');
+    if (userToken) {
+      // check if token is valid then set isLogin true
+      const decodeToken = jwt_decode(userToken);
+      const curTime = new Date();
+      const tokenExpiryTime = new Date(decodeToken.exp * 1000 - 1 * 60 * 60 * 1000); // Subtract 1 hour
+      if (tokenExpiryTime > curTime) return <Outlet />;
+    }
+    return <Navigate to="/WebHHT" />;
   } catch (err) {
-    toast.info('Please Login First...');
-    return <Navigate to="/" />;
+    console.log(err);
+    return <Navigate to="/WebHHT" />;
   }
 };
 

@@ -9,7 +9,6 @@ const Palletization = props => {
   const [palletBarcode, setPalletBarcode] = useState('');
   const [articleBarcode, setArticleBarcode] = useState([]);
 
-
   const onPChange = async e => {
     setPalletBarcode(e.target.value);
 
@@ -42,8 +41,6 @@ const Palletization = props => {
   const token = localStorage.getItem('accessToken');
 
   const onSubmit = async e => {
-    e.preventDefault();
-
     try {
       const { data: Resp } = await axios({
         method: 'POST',
@@ -56,7 +53,7 @@ const Palletization = props => {
         }
       });
       // console.log('resp data fjjr-->', Resp.data);
-      toast.success("Successfully Pallatize!!",Resp.message);
+      toast.success('Successfully Pallatize!!', Resp.message);
       window.location.reload();
     } catch (err) {
       if (err.response && err.response.data) {
@@ -78,7 +75,7 @@ const Palletization = props => {
       </section>
 
       <section className="form">
-        <form onSubmit={onSubmit} >
+        <form>
           <div className="form-group">
             <div>{<ScanBarcode setBarcode={setPalletBarcode} />}</div>
             <input
@@ -106,7 +103,9 @@ const Palletization = props => {
             />
           </div>
           <div className="form-group">
-            <button className="btn btn-block">Confirm Palletization</button>
+            <button onClick={onSubmit} className="btn btn-block">
+              Confirm Palletization
+            </button>
           </div>
         </form>
       </section>

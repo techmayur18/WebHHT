@@ -1,24 +1,27 @@
-import { useState } from "react";
-import { AiFillSetting } from "react-icons/ai";
-// import { toast } from 'react-toastify';
+import { useState, useEffect } from 'react';
+import { AiFillSetting } from 'react-icons/ai';
+import { toast } from 'react-toastify';
 
 function Settings() {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [changeURL, setChangeURL] = useState('');
 
-  const { email } = formData;
+  useEffect(() => {
+    let APP_CONFIG = localStorage.getItem('APP_CONFIG');
+    if (APP_CONFIG) {
+      APP_CONFIG = JSON.parse(APP_CONFIG);
+      setChangeURL(APP_CONFIG.API_URL);
+    }
+  }, []);
 
-  const oncChange = (e) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
+  const oncChange = e => {
+    setChangeURL(e.target.value);
   };
 
-  const onSubmit = async (e) => {
+  const onSubmit = async e => {
     e.preventDefault();
+    localStorage.setItem('APP_CONFIG', JSON.stringify({ API_URL: changeURL }));
+    toast.success('Set successfully');
+    window.location.href = '/WebHHT';
   };
 
   return (
@@ -33,11 +36,11 @@ function Settings() {
         <form onSubmit={onSubmit}>
           <div className="form-group">
             <input
-              type="text"
+              type="url"
               className="form-control"
-              id="email"
-              name="email"
-              value={email}
+              id="url"
+              name="url"
+              value={changeURL === '' ? 'Using Default configuration' : changeURL}
               placeholder="API URL"
               onChange={oncChange}
               required
@@ -45,7 +48,9 @@ function Settings() {
           </div>
 
           <div className="form-group">
-            <button className="btn btn-block">Set</button>
+            <button type="submit" className="btn btn-block">
+              Set
+            </button>
           </div>
         </form>
       </section>

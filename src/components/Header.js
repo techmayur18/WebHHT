@@ -1,22 +1,30 @@
+import { useEffect } from 'react';
 import { FaSignInAlt } from 'react-icons/fa';
 import { AiFillSetting } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-// import { useState } from 'react';
+import jwt_decode from 'jwt-decode';
 
-function Header() {
+function Header({ isLoggedIn, setIsLoggedIn }) {
   // const [isLogin, setIsLogin] = useState(true);
   const navigate = useNavigate();
 
-  // const handleLogin = () => {
-  //   if (isLogin === true) setIsLogin(false);
-  // };
+  useEffect(() => {
+    const userToken = window.localStorage.getItem('accessToken');
+    if (userToken) {
+      // check if token is valid then set isLogin true
+      const decodeToken = jwt_decode(userToken);
+      const curTime = new Date();
+      const tokenExpiryTime = new Date(decodeToken.exp * 1000 - 1 * 60 * 60 * 1000); // Subtract 1 hour
+      if (tokenExpiryTime > curTime) setIsLoggedIn(true);
+    }
+  }, [setIsLoggedIn]);
 
   const handleLogout = () => {
-    // if (isLogin === false) setIsLogin(true);
-    localStorage.clear();
-    toast.success('Logout Successfully!!');
+    localStorage.removeItem('accessToken');
+    setIsLoggedIn(false);
+    toast.success('Logged out');
     navigate('/WebHHT');
   };
 
@@ -30,23 +38,8 @@ function Header() {
         </Link>
       </div>
       <ul>
-        {/* {isLogin ? (
-          <li>
-            <Link onClick={handleLogin}>
-              <FaSignInAlt />
-              Login
-            </Link>
-          </li>
-        ) : (
-          <li>
-            <Link to="/" onClick={handleLogout}>
-              <FaSignInAlt />
-              Logout
-            </Link>
-          </li>
-        )} */}
         <li>
-          <Link to="/" onClick={handleLogout}>
+          <Link to="/" onClick={handleLogout} style={isLoggedIn ? { visibility: 'visible' } : { visibility: 'hidden' }}>
             <FaSignInAlt />
             Logout
           </Link>

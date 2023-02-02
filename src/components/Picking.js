@@ -9,17 +9,38 @@ function Picking() {
   const [palletBarcode, setPalletBarcode] = useState('');
   const [articleBarcode, setArticleBarcode] = useState([]);
 
+  // const token = localStorage.getItem('accessToken');
+
   const onPChange = e => {
     setPalletBarcode(e.target.value);
   };
 
   const onAChange = e => {
     setArticleBarcode(e.target.value);
+
+    // try {
+    //   axios.defaults.headers['Bearer'] = token;
+    //   const { data: Resp } = await axios({
+    //     url: `${config.API_URL}pallet/validate`
+    //   });
+    //   console.log('first in function--->', palletBarcode);
+
+    //   if (palletBarcode === Resp.data) console.log('Successfully Validate', palletBarcode);
+    // } catch (err) {
+    //   console.log('EXECUTION_ERR:-->', err);
+    //   if (err.response && err.response.data) {
+    //     const errMsg = err.response.data.message || 'Wrong Pallet ID';
+    //     console.log('Error data validation---->', err.response.data);
+    //     console.log('Error Msg-->', errMsg);
+    //     toast.error(errMsg, {
+    //     autoClose: false
+    //     });
+    //     return false;
+    //   }
+    // }
   };
 
-  const onSubmit = async e => {
-    e.preventDefault();
-  };
+  const onSubmit = async e => {};
 
   //  const token = localStorage.getItem('accessToken');
 
@@ -29,12 +50,10 @@ function Picking() {
   //     try {
   //       const { data: Resp } = await axios({
   //         method: 'POST',
-  //         url: `${config.API_URL}pallet/register/${palletBarcode}?withPkg=true`,
+  //         url: `${config.API_URL}pallet/${palletBarcode}?isFull=true`,
   //         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
   //         data: {
-  //           sku: 'EL0001',
-  //           qty: articleBarcode.split(',').length,
-  //           pkgs: [articleBarcode]
+  //
   //         }
   //       });
   //       console.log('resp data fjjr-->', Resp.data);

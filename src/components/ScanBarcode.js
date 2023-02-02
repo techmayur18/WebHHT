@@ -138,7 +138,12 @@ const ScanBarcode = props => {
 
   return (
     <div>
-      <button className="btn btn-sm" onClick={() => setIsStart(prevStart => !prevStart)} style={{ marginBottom: 20 }}>
+      <button
+        type="button"
+        className="btn btn-sm"
+        onClick={() => setIsStart(prevStart => !prevStart)}
+        style={{ marginBottom: 20 }}
+      >
         {isStart ? 'Stop ' : props.setArticleBarcode ? 'Scan Article' : 'Scan Pallet'}
       </button>
       {isStart && (
