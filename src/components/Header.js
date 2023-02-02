@@ -17,7 +17,7 @@ function Header() {
     // if (isLogin === false) setIsLogin(true);
     localStorage.clear();
     toast.success('Logout Successfully!!');
-    navigate('/');
+    navigate('/WebHHT');
   };
 
   return (

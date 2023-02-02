@@ -49,7 +49,7 @@ function Login() {
         <h1>
           <FaSignInAlt /> Login
         </h1>
-        <p>Please login to get support</p>
+        <p>Please login to continue</p>
       </section>
       <section className="form">
         <form onSubmit={handleSubmit}>

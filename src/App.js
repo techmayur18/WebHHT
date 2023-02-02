@@ -16,7 +16,7 @@ function App() {
         <div className="container">
           <Header />
           <Routes>
-            <Route exact path="/" element={<Login />} />
+            <Route exact path="/WebHHT" element={<Login />} />
             <Route path="/home" element={<PrivateRoute />}>
               <Route exact path="/home" element={<Home />} />
             </Route>
@@ -26,9 +26,8 @@ function App() {
             <Route path="/picking" element={<PrivateRoute />}>
               <Route exact path="/picking" element={<Picking />} />
             </Route>
-            <Route path="/settings" element={<PrivateRoute />}>
-              <Route exact path="/settings" element={<Settings />} />
-            </Route>
+
+            <Route exact path="/settings" element={<Settings />} />
           </Routes>
         </div>
       </Router>
