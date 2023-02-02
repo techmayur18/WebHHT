@@ -3,9 +3,8 @@ import { FaPallet } from 'react-icons/fa';
 import ScanBarcode from './ScanBarcode';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { config } from '../config';
 
-const Palletization = props => {
+const Palletization = API_URL => {
   const [palletBarcode, setPalletBarcode] = useState('');
   const [articleBarcode, setArticleBarcode] = useState([]);
 
@@ -44,7 +43,7 @@ const Palletization = props => {
     try {
       const { data: Resp } = await axios({
         method: 'POST',
-        url: `${config.API_URL}pallet/register/${palletBarcode}?withPkg=true`,
+        url: `${API_URL}pallet/register/${palletBarcode}?withPkg=true`,
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
         data: {
           sku: 'EL1000',
@@ -52,7 +51,7 @@ const Palletization = props => {
           pkgs: [articleBarcode]
         }
       });
-      // console.log('resp data fjjr-->', Resp.data);
+
       toast.success('Successfully Pallatize!!', Resp.message);
       window.location.reload();
     } catch (err) {

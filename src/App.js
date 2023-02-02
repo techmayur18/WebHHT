@@ -56,7 +56,8 @@ function App() {
 
       {/* The below toast options are default, we don't need to pass it. Though passing it for reference purpose */}
       <ToastContainer
-        position="top-right"
+        position="bottom-center"
+        style={{ width: '250px', marginLeft: 70, bottom: 70 }}
         autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}

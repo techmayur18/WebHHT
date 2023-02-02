@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import jwt_decode from 'jwt-decode';
+import logo_img from '../img/favicon-32x32.png';
 
 function Header({ isLoggedIn, setIsLoggedIn }) {
   // const [isLogin, setIsLogin] = useState(true);
@@ -33,6 +34,7 @@ function Header({ isLoggedIn, setIsLoggedIn }) {
       <div className="logo">
         <Link to="/home">
           <h6>
+            <img src={logo_img} alt="#" /> &nbsp;
             <b>Web HHT</b>
           </h6>
         </Link>
