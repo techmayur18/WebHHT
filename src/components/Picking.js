@@ -53,7 +53,7 @@ const Picking = () => {
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
         data: isConfirmPick
       });
-      console.log('resp data fjjr-->', Resp);
+      console.log('Picking Response data -->', Resp);
       toast.success('Picking Successfully!!');
     } catch (err) {
       if (err.response && err.response.data) {
