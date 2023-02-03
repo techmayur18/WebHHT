@@ -3,10 +3,16 @@ import { FaPallet } from 'react-icons/fa';
 import ScanBarcode from './ScanBarcode';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { config } from '../config';
 
 const Palletization = API_URL => {
+  const [isSku, setIsSku] = useState('');
   const [palletBarcode, setPalletBarcode] = useState('');
   const [articleBarcode, setArticleBarcode] = useState([]);
+
+  const onSChange = e => {
+    setIsSku(e.target.value);
+  };
 
   const onPChange = async e => {
     setPalletBarcode(e.target.value);
@@ -36,24 +42,26 @@ const Palletization = API_URL => {
   const onAChange = e => {
     setArticleBarcode(e.target.value);
   };
-
   const token = localStorage.getItem('accessToken');
 
   const onSubmit = async e => {
+    e.preventDefault();
     try {
       const { data: Resp } = await axios({
         method: 'POST',
-        url: `${API_URL}pallet/register/${palletBarcode}?withPkg=true`,
+        url: `${config.API_URL}pallet/register/${palletBarcode}?withPkg=true`,
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
         data: {
-          sku: 'EL1000',
+          sku: isSku,
           qty: articleBarcode.split(',').length,
           pkgs: [articleBarcode]
         }
       });
 
       toast.success('Successfully Pallatize!!', Resp.message);
-      window.location.reload();
+      setPalletBarcode('');
+      setArticleBarcode('');
+      // window.location.reload();
     } catch (err) {
       if (err.response && err.response.data) {
         const errMsg = err.response.data || 'Retrieval Failed.';
@@ -76,6 +84,16 @@ const Palletization = API_URL => {
       <section className="form">
         <form>
           <div className="form-group">
+            <input
+              type="text"
+              className="form-control"
+              id="sku"
+              name="sku"
+              value={isSku}
+              placeholder="Add SKU ID"
+              onChange={onSChange}
+              // disabled
+            />
             <div>{<ScanBarcode setBarcode={setPalletBarcode} />}</div>
             <input
               type="text"

@@ -8,6 +8,7 @@ import { config } from '../config';
 const Picking = () => {
   const [palletBarcode, setPalletBarcode] = useState('');
   const [articleBarcode, setArticleBarcode] = useState([]);
+  const [isConfirmPick, setIsConfirmPick] = useState('');
 
   const token = localStorage.getItem('accessToken');
 
@@ -17,17 +18,19 @@ const Picking = () => {
 
   const confirmPallet = async () => {
     try {
-      axios.defaults.headers['Bearer'] = token;
       const { data: Resp } = await axios({
-        url: `${config.API_URL}pallet/${palletBarcode}`
+        method: 'GET',
+        url: `${config.API_URL}pallet/${palletBarcode}`,
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
       });
 
       console.log('first in picking pallet--->', palletBarcode);
-      console.log(Resp.data);
+      console.log(Resp);
+      setIsConfirmPick(Resp);
     } catch (err) {
       console.log('EXECUTION_ERR:-->', err);
       if (err.response && err.response.data) {
-        const errMsg = err.response.data.message || 'Wrong Pallet ID';
+        const errMsg = err.response.data || 'Wrong Pallet ID';
 
         console.log('picking Msg-->', errMsg);
         toast.error(errMsg, {
@@ -48,15 +51,15 @@ const Picking = () => {
         method: 'POST',
         url: `${config.API_URL}pallet/${palletBarcode}?isFull=true`,
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-        data: {}
+        data: isConfirmPick
       });
-      console.log('resp data fjjr-->', Resp.data);
-      toast.success(Resp.message);
+      console.log('resp data fjjr-->', Resp);
+      toast.success('Picking Successfully!!');
     } catch (err) {
       if (err.response && err.response.data) {
         const errMsg = err.response.data || 'Retrieval Failed.';
         console.log(err.response.data);
-        toast.info(errMsg.error);
+        toast.info(errMsg.desc[0]);
         toast.error(errMsg.desc[1]);
         return false;
       }

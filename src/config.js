@@ -7,5 +7,5 @@
 
 export const config = {
   // API_URL: 'http://localhost:5618/api/',
-  API_URL: 'http://43.230.201.16:4456/asrs/api/'
+  API_URL: 'http://10.10.12.117:4456/asrs/api/'
 };
